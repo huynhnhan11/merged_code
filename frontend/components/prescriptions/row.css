@@ -1,0 +1,49 @@
+.action-btn.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 11px;
+  font-size: 1.15em;
+  border-radius: 50%;
+  border: none;
+  background: #f4fafd;
+  color: #2654c5;
+  margin-right: 8px;
+  transition: background 0.18s, box-shadow 0.18s, transform 0.14s;
+  box-shadow: 0 2px 8px rgba(38,84,197,0.08);
+  cursor: pointer;
+}
+
+.action-btn.icon-btn:hover {
+  background: #e5eaf1;
+  color: #157347;
+  transform: translateY(-2px) scale(1.08);
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.95em;
+  font-weight: 600;
+}
+
+.status-badge.done {
+  background: #e6faf5;
+  color: #219653;
+}
+
+.status-badge.pending {
+  background: #fffbe6;
+  color: #c77d00;
+}
+
+.prescription-row.expanded {
+  background-color: #f0f8ff;
+  border-bottom: none;
+}
+
+.action-btn.icon-btn.active {
+  background: #2654c5;
+  color: white;
+}

@@ -1,0 +1,40 @@
+.patient-tabs-wrapper {
+  padding: 20px 0 10px 0;
+  background: #f8fafd;
+}
+
+.tabs-container {
+  max-width: 900px;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(38,84,197,0.06);
+  padding: 24px 18px 18px 18px;
+}
+
+.tabs-header {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.tab-btn {
+  padding: 10px 24px;
+  border: none;
+  border-radius: 8px 8px 0 0;
+  background: #f4fafd;
+  color: #2654c5;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s;
+}
+
+.tab-btn.active {
+  background: #2654c5;
+  color: #fff;
+}
+
+.tabs-content {
+  padding: 18px 0 0 0;
+}

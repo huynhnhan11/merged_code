@@ -1,0 +1,55 @@
+.patient-detail {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.patient-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.patient-title {
+  font-size: 1.5rem;
+  color: #2654c5;
+  margin: 0;
+}
+
+.patient-id {
+  background: #f4fafd;
+  color: #2654c5;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.patient-info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+  background: #f9fbfd;
+  border-radius: 8px;
+  border-left: 3px solid #3ac9b6;
+}
+
+.info-label {
+  font-size: 0.9rem;
+  color: #64748b;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.info-value {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #1e293b;
+}

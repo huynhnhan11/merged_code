@@ -1,0 +1,122 @@
+.sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 250px;
+  height: 100vh;
+  background: #fff;
+  border-right: 1.5px solid #e5eaf1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  z-index: 20;
+  box-shadow: 2px 0 8px rgba(38,84,197,0.03);
+}
+
+.sidebar-logo {
+  display: block;
+  width: 80%;
+  max-width: 160px;
+  min-width: 64px;
+  height: auto;
+  margin: 24px 0 8px 24px;
+  object-fit: contain;
+}
+
+.sidebar-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-left: 16px;
+  padding-right: 8px;
+}
+
+.sidebar-divider {
+  height: 1.5px;
+  background: linear-gradient(to right, #e5eaf1 30%, #c4d3ee 100%);
+  margin: 18px 16px 12px 0px;
+  border: none;
+  border-radius: 1px;
+}
+
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 16px;
+  border-radius: 8px;
+  color: #222;
+  text-decoration: none;
+  font-size: 1.06rem;
+  font-weight: 500;
+  transition: background 0.18s, color 0.18s, font-weight 0.18s;
+  margin: 0;
+}
+
+.sidebar-link.active {
+  background: #2654c5;
+  color: #fff;
+  font-weight: 900;
+  box-shadow: 0 2px 8px rgba(38,84,197,0.06);
+}
+
+.sidebar-link:hover {
+  background: #e9f1fd;
+  color: #2654c5;
+}
+
+.sidebar-link .sidebar-icon {
+  font-size: 1.2em;
+  color: #b0b8c1;
+  transition: color 0.18s;
+}
+
+.sidebar-link.active .sidebar-icon {
+  color: #fff;
+}
+
+.sidebar-link:hover .sidebar-icon {
+  color: #2654c5;
+}
+
+.sidebar-footer {
+  padding-left: 25px;
+  padding-bottom: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.sidebar-user {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #2654c5;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.sidebar-logout {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  color: #b0b8c1;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 4px 0;
+  transition: color 0.15s, font-weight 0.1s;
+}
+
+.sidebar-logout:hover {
+  color: #e53935;
+  font-weight: 600;
+}
+
+.sidebar-logout:active,
+.sidebar-logout:focus {
+  font-weight: 600;
+  color: #e53935;
+  transition: font-weight 0.1s;
+}

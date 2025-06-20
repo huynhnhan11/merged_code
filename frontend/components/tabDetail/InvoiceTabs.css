@@ -1,0 +1,80 @@
+.invoice-tabs-container {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 18px rgba(38, 84, 197, 0.1);
+  overflow: hidden;
+  margin-top: 20px;
+}
+
+.tabs-header {
+  display: flex;
+  background: #f8fafd;
+  border-bottom: 1px solid #e5eaf1;
+}
+
+.tab-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.tab-btn.active {
+  background: #fff;
+}
+
+.tab-btn.active::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: #3ac9b6;
+}
+
+.tab-icon {
+  font-size: 24px;
+  margin-bottom: 8px;
+  transition: transform 0.3s;
+}
+
+.tab-btn.active .tab-icon {
+  color: #2654c5;
+  transform: scale(1.1);
+}
+
+.tab-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #64748b;
+}
+
+.tab-btn.active .tab-label {
+  color: #2654c5;
+}
+
+.tabs-content {
+  padding: 24px;
+}
+
+.tab-pane {
+  display: none;
+}
+
+.tab-pane.active {
+  display: block;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

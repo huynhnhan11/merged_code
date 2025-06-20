@@ -1,0 +1,81 @@
+.invoices-table-container {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 4px 18px rgba(38,84,197,0.07);
+  padding: 16px;
+  margin: 0 auto 28px auto;
+  max-width: 1200px;
+  overflow-x: auto;
+}
+
+.invoices-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  min-width: 1000px;
+}
+
+.invoices-table th {
+  background: #f8fafd;
+  color: #2654c5;
+  font-weight: 800;
+  padding: 14px 16px;
+  text-align: center;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.invoices-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #f1f5f9;
+  color: #334155;
+}
+
+.invoice-row {
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.invoice-row.selected {
+  background-color: #f0f8ff;
+}
+
+.invoice-row:hover {
+  background-color: #f9fbfd;
+}
+
+.expand-icon {
+  text-align: center;
+  width: 40px;
+}
+
+.invoice-id {
+  color: #2654c5;
+  font-weight: 600;
+}
+
+.invoice-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.icon-btn {
+  background: none;
+  border: none;
+  font-size: 1.2em;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.icon-btn:hover {
+  transform: scale(1.1);
+}
+
+.icon-btn.delete {
+  color: #e53935;
+}
+
+.invoice-detail-row td {
+  padding: 0 !important;
+  background: #f8fafd;
+}

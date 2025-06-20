@@ -1,0 +1,14 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.main-content {
+  margin-left: 250px; 
+  padding: 32px 28px 24px 28px;
+  min-height: 100vh;
+  background: #f9fafb;
+  width: 100%;
+  box-sizing: border-box;
+}
+
