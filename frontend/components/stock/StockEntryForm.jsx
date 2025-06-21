@@ -1,104 +1,207 @@
 import { useState } from "react";
+import "./form.css";
 
-export default function StockEntryForm({ onSave, onCancel }) {
-    const [entries, setEntries] = useState([
-        { name: "", unit: "", quantity: 1, price: 0, sale: 0, expiry: "", total: 0 },
-    ]);
-    const [note, setNote] = useState("");
-    const [date, setDate] = useState(new Date().toISOString().slice(0, 10));
+export default function StockEntryForm({ 
+  initialData, 
+  onSave, 
+  onClose 
+}) {
+  const [formData, setFormData] = useState(
+    initialData || { 
+      supplier: "", 
+      date: new Date().toISOString().slice(0, 10),
+      note: "",
+      items: [
+        { name: "", unit: "", quantity: 1, price: 0, total: 0 }
+      ] 
+    }
+  );
 
-    const updateField = (i, field, value) => {
-        const updated = [...entries];
-        updated[i][field] = value;
-        updated[i].total = updated[i].quantity * updated[i].price;
-        setEntries(updated);
-    };
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
 
-    const addRow = () => {
-        setEntries([...entries, { name: "", unit: "", quantity: 1, price: 0, sale: 0, expiry: "", total: 0 }]);
-    };
+  const updateItem = (index, field, value) => {
+    const updatedItems = [...formData.items];
+    updatedItems[index] = { ...updatedItems[index], [field]: value };
+    
+    if (field === 'quantity' || field === 'price') {
+      updatedItems[index].total = updatedItems[index].quantity * updatedItems[index].price;
+    }
+    
+    setFormData(prev => ({ ...prev, items: updatedItems }));
+  };
 
-    const removeRow = (i) => {
-        const updated = [...entries];
-        updated.splice(i, 1);
-        setEntries(updated);
-    };
+  const addItem = () => {
+    setFormData(prev => ({
+      ...prev,
+      items: [...prev.items, { 
+        name: "", 
+        unit: "", 
+        quantity: 1, 
+        price: 0, 
+        total: 0 
+      }]
+    }));
+  };
 
-    const total = entries.reduce((sum, e) => sum + Number(e.total || 0), 0);
+  const removeItem = (index) => {
+    if (formData.items.length <= 1) return;
+    const updatedItems = formData.items.filter((_, i) => i !== index);
+    setFormData(prev => ({ ...prev, items: updatedItems }));
+  };
 
-    const handleSubmit = () => {
-        onSave({ entries, note, date });
-    };
+  const total = formData.items.reduce(
+    (sum, item) => sum + (item.total || 0), 0
+  );
 
-    return (
-        <div className="bg-white shadow rounded p-4 mt-6">
-            <h2 className="text-lg font-semibold mb-4">📦 Phiếu nhập kho</h2>
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSave({ ...formData, total });
+  };
 
-            <table className="w-full text-sm border">
-                <thead className="bg-gray-100">
-                    <tr>
-                        <th className="border px-2 py-1">#</th>
-                        <th className="border px-2 py-1">THUỐC</th>
-                        <th className="border px-2 py-1">ĐVT</th>
-                        <th className="border px-2 py-1">SỐ LƯỢNG</th>
-                        <th className="border px-2 py-1">GIÁ NHẬP</th>
-                        <th className="border px-2 py-1">GIÁ BÁN</th>
-                        <th className="border px-2 py-1">HẾT HẠN</th>
-                        <th className="border px-2 py-1">TỔNG CỘNG</th>
-                        <th className="border px-2 py-1"></th>
-                    </tr>
+  return (
+    <div className="modal-overlay">
+      <div className="stock-form-modal">
+        <button className="modal-close" onClick={onClose}>&times;</button>
+        <h3 className="modal-title">
+          {initialData ? "Cập nhật phiếu nhập" : "Tạo phiếu nhập mới"}
+        </h3>
+        
+        <form onSubmit={handleSubmit} className="stock-form">
+          <div className="form-grid">
+            <div className="form-group">
+              <label>Nhà cung cấp *</label>
+              <input
+                type="text"
+                name="supplier"
+                value={formData.supplier}
+                onChange={handleChange}
+                required
+                placeholder="Tên nhà cung cấp"
+              />
+            </div>
+            
+            <div className="form-group">
+              <label>Ngày nhập *</label>
+              <input
+                type="date"
+                name="date"
+                value={formData.date}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            
+            <div className="form-group form-full">
+              <label>Ghi chú</label>
+              <textarea
+                name="note"
+                value={formData.note}
+                onChange={handleChange}
+                placeholder="Ghi chú thêm..."
+                rows={2}
+              />
+            </div>
+          </div>
+          
+          <div className="items-section">
+            <h4>Danh sách thuốc/vật tư nhập kho</h4>
+            <div className="items-table-container">
+              <table className="items-table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Tên thuốc/vật tư *</th>
+                    <th>Đơn vị tính *</th>
+                    <th>Số lượng *</th>
+                    <th>Đơn giá (₫) *</th>
+                    <th>Thành tiền (₫)</th>
+                    <th></th>
+                  </tr>
                 </thead>
                 <tbody>
-                    {entries.map((item, i) => (
-                        <tr key={i}>
-                            <td className="border px-2 py-1 text-center">{i + 1}</td>
-                            <td className="border px-2 py-1">
-                                <input className="w-full" value={item.name} onChange={(e) => updateField(i, "name", e.target.value)} />
-                            </td>
-                            <td className="border px-2 py-1">
-                                <input className="w-full" value={item.unit} onChange={(e) => updateField(i, "unit", e.target.value)} />
-                            </td>
-                            <td className="border px-2 py-1">
-                                <input type="number" className="w-full" value={item.quantity} onChange={(e) => updateField(i, "quantity", e.target.value)} />
-                            </td>
-                            <td className="border px-2 py-1">
-                                <input type="number" className="w-full" value={item.price} onChange={(e) => updateField(i, "price", e.target.value)} />
-                            </td>
-                            <td className="border px-2 py-1">
-                                <input type="number" className="w-full" value={item.sale} onChange={(e) => updateField(i, "sale", e.target.value)} />
-                            </td>
-                            <td className="border px-2 py-1">
-                                <input type="date" className="w-full" value={item.expiry} onChange={(e) => updateField(i, "expiry", e.target.value)} />
-                            </td>
-                            <td className="border px-2 py-1 text-right">{item.total.toLocaleString()}</td>
-                            <td className="border px-2 py-1 text-center">
-                                <button className="text-red-500" onClick={() => removeRow(i)}>✕</button>
-                            </td>
-                        </tr>
-                    ))}
+                  {formData.items.map((item, index) => (
+                    <tr key={index}>
+                      <td>{index + 1}</td>
+                      <td>
+                        <input
+                          type="text"
+                          value={item.name}
+                          onChange={e => updateItem(index, "name", e.target.value)}
+                          required
+                        />
+                      </td>
+                      <td>
+                        <input
+                          type="text"
+                          value={item.unit}
+                          onChange={e => updateItem(index, "unit", e.target.value)}
+                          required
+                        />
+                      </td>
+                      <td>
+                        <input
+                          type="number"
+                          min="1"
+                          value={item.quantity}
+                          onChange={e => updateItem(index, "quantity", Number(e.target.value))}
+                          required
+                        />
+                      </td>
+                      <td>
+                        <input
+                          type="number"
+                          min="0"
+                          value={item.price}
+                          onChange={e => updateItem(index, "price", Number(e.target.value))}
+                          required
+                        />
+                      </td>
+                      <td className="text-right">
+                        {item.total.toLocaleString()} ₫
+                      </td>
+                      <td>
+                        <button
+                          type="button"
+                          className="remove-btn"
+                          onClick={() => removeItem(index)}
+                          disabled={formData.items.length <= 1}
+                          title="Xóa dòng"
+                        >
+                          🗑️
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
                 </tbody>
-            </table>
-
-            <div className="mt-4 text-right text-sm">
-                <strong className="text-red-600">Tổng hoá đơn nhập:</strong> {total.toLocaleString()} ₫
-                <button onClick={addRow} className="ml-4 text-sm text-gray-600">+ Thêm dòng</button>
+              </table>
             </div>
-
-            <div className="mt-4 flex justify-between items-center">
-                <div>
-                    <label className="text-sm font-medium mr-2">Ngày nhập:</label>
-                    <input type="date" className="border px-2 py-1 rounded" value={date} onChange={(e) => setDate(e.target.value)} />
-                </div>
-                <div className="text-sm text-gray-700">
-                    <label className="font-medium mr-2">Ghi chú:</label>
-                    <textarea className="border px-2 py-1 rounded w-96" value={note} onChange={(e) => setNote(e.target.value)} rows={2} />
-                </div>
-            </div>
-
-            <div className="mt-6 flex gap-3">
-                <button className="bg-teal-600 text-white px-4 py-2 rounded" onClick={handleSubmit}>LƯU</button>
-                <button className="bg-gray-300 px-4 py-2 rounded" onClick={onCancel}>Huỷ</button>
-            </div>
-        </div>
-    );
+            <button
+              type="button"
+              className="add-item-btn"
+              onClick={addItem}
+            >
+              + Thêm dòng
+            </button>
+          </div>
+          
+          <div className="total-section">
+            <div className="total-label">Tổng cộng:</div>
+            <div className="total-amount">{total.toLocaleString()} ₫</div>
+          </div>
+          
+          <div className="form-actions">
+            <button type="button" className="btn-cancel" onClick={onClose}>
+              Hủy
+            </button>
+            <button type="submit" className="btn-save">
+              {initialData ? "Cập nhật" : "Lưu phiếu"}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
 }

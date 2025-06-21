@@ -2,42 +2,70 @@ import { useState } from "react";
 import FilterBar from "../components/common/FilterBar";
 import StockEntryList from "../components/stock/StockList";
 import StockEntryForm from "../components/stock/StockEntryForm";
+import "../style/StockEntries.css";
 
 export default function StockEntriesPage() {
-    const [filters, setFilters] = useState({ keyword: "", fromDate: null, toDate: null });
-    const [showForm, setShowForm] = useState(false);
+  const [filters, setFilters] = useState({
+    keyword: "",
+    fromDate: null,
+    toDate: null,
+  });
+  
+  const [showForm, setShowForm] = useState(false);
+  const [editingEntry, setEditingEntry] = useState(null);
 
-    const handleAdd = (data) => {
-        console.log("📝 Phiếu nhập mới:", data);
-        // TODO: gửi lên backend sau này
-        setShowForm(false);
-    };
+  const handleAdd = (data) => {
+    console.log("📝 Phiếu nhập mới:", data);
+    setShowForm(false);
+  };
 
-    return (
-        <div className="mt-20 px-6">
-            {!showForm ? (
-                <>
-                    <FilterBar
-                        onSearch={setFilters}
-                        extraButtons={
-                            <div className="flex gap-2 items-center">
-                                <button
-                                    className="bg-green-700 text-white text-sm px-3 py-0.5 rounded-full whitespace-nowrap"
-                                    onClick={() => setShowForm(true)}
-                                >
-                                    + Thêm phiếu nhập
-                                </button>
-                                <button className="bg-blue-600 text-white text-sm px-3 py-0.5 rounded-full whitespace-nowrap">
-                                    ⬇ Xuất file excel
-                                </button>
-                            </div>
-                        }
-                    />
-                    <StockEntryList filters={filters} />
-                </>
-            ) : (
-                <StockEntryForm onSave={handleAdd} onCancel={() => setShowForm(false)} />
-            )}
+  const handleEdit = (data) => {
+    console.log("✏️ Cập nhật phiếu nhập:", data);
+    setShowForm(false);
+    setEditingEntry(null);
+  };
+
+  const openEditForm = (entry) => {
+    setEditingEntry(entry);
+    setShowForm(true);
+  };
+
+  return (
+    <div className="stock-entries-page">
+      <div className="page-header">
+        <h2 className="page-title">Quản lý Nhập kho</h2>
+        <div className="page-actions">
+          <button 
+            className="btn-add" 
+            onClick={() => {
+              setEditingEntry(null);
+              setShowForm(true);
+            }}
+          >
+            + Tạo phiếu nhập
+          </button>
         </div>
-    );
+      </div>
+
+      <div className="filterbar-wrapper">
+        <FilterBar onSearch={setFilters} />
+      </div>
+
+      <StockEntryList 
+        filters={filters} 
+        onEdit={openEditForm} 
+      />
+      
+      {showForm && (
+        <StockEntryForm
+          initialData={editingEntry}
+          onSave={editingEntry ? handleEdit : handleAdd}
+          onClose={() => {
+            setShowForm(false);
+            setEditingEntry(null);
+          }}
+        />
+      )}
+    </div>
+  );
 }

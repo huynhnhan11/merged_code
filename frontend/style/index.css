@@ -8,6 +8,8 @@ body {
   align-items: center;
   height: 100vh;
   overflow: hidden;
+  overflow-y: auto;         /* Cho phép cuộn dọc toàn trang */
+  scroll-behavior: smooth;  
 }
 
 .container {
