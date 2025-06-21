@@ -1,0 +1,47 @@
+.stock-entries-page {
+  padding: 32px;
+  min-height: 100vh;
+  box-sizing: border-box;
+  margin-left: 50px;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.page-title {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #2654c5;
+  margin: 0;
+}
+
+.btn-add {
+  background: linear-gradient(90deg, #3ac9b6 60%, #61b6aa 100%);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 2px 8px rgba(38, 84, 197, 0.15);
+}
+
+.btn-add:hover {
+  background: linear-gradient(90deg, #299c89 60%, #61b6aa 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(38, 84, 197, 0.2);
+}
+
+.filterbar-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 24px;
+}
